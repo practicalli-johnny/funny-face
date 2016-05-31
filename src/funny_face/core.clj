@@ -15,7 +15,7 @@
 
 (defn setup []
   (q/smooth)
-  (q/frame-rate 1)
+  (q/frame-rate 3)
   (q/background 200))
 
 (defn draw []
@@ -26,13 +26,15 @@
   (let [diam (q/random 100)
         x    (q/random (q/width))
         y    (q/random (q/height))]
-    (q/ellipse x y diam diam)))
+    (q/ellipse x y diam diam))
+  (q/save "quil-face.png"))
 
 (q/defsketch example
   :title "Oh so many grey circles"
   :setup setup
   :draw draw
-  :size [323 200])
+  :size [323 200]
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Ring & Compojure stuff
@@ -63,11 +65,17 @@
    :body (io/file "face.png")
    :headers {"Content-Type" "image/png"}})
 
+(defn quil-face
+  [request]
+  {:status 200
+   :body (io/file "quil-face.png")
+   :headers {"Content-Type" "image/png"}})
 
 (defroutes app
   (GET "/" [] welcome)
   (GET "/face" [] get-face)
   (GET "/ring-face" [] ring-face)
+  (GET "/quil-face" [] quil-face)
   (not-found "<h1>This is not the page you are looking for</h1>
               <p>Sorry, the page you requested was not found!</p>"))
 
