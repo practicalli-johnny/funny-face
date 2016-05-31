@@ -7,7 +7,8 @@
                  [org.clojure/test.check "0.9.0"]
                  [ring "1.5.0-RC1"]
                  [compojure "1.5.0"]
-                 [hiccup "1.0.5"]]
+                 [hiccup "1.0.5"]
+                 [quil "2.2.1"]]
   :main funny-face.core
   :profiles {:dev
              {:main funny-face.core/-dev-main}})

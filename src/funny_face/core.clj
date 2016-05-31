@@ -6,7 +6,36 @@
             [hiccup.core :refer :all]
             [hiccup.page :refer :all]
             [ring.middleware.resource :refer :all]
-            [clojure.java.io :as io]))
+            [clojure.java.io :as io]
+            [quil.core :as q]))
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;; Quil fun
+
+
+(defn setup []
+  (q/smooth)
+  (q/frame-rate 1)
+  (q/background 200))
+
+(defn draw []
+  (q/stroke (q/random 255))
+  (q/stroke-weight (q/random 10))
+  (q/fill (q/random 255))
+
+  (let [diam (q/random 100)
+        x    (q/random (q/width))
+        y    (q/random (q/height))]
+    (q/ellipse x y diam diam)))
+
+(q/defsketch example
+  :title "Oh so many grey circles"
+  :setup setup
+  :draw draw
+  :size [323 200])
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;; Ring & Compojure stuff
 
 (defn welcome
   "A ring handler to respond with a simple welcome message"
@@ -23,6 +52,10 @@
          [:body
           [:div [:h1 {:class "info"} "This is Hiccup"]]
           [:div [:image "face.png"]]]))
+
+
+#_(defn random-face [])
+
 
 (defn ring-face
   [request]
